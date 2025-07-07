@@ -15,6 +15,13 @@ document.querySelector("form").addEventListener("submit", function (e) {
   const bmi = Weight / (heightM * heightM);
   let resultText = `Your BMI is ${bmi.toFixed(2)} – `;
 
+  if (heightcm < 50) {
+    alert("Bro , are you an ant?Enter Realistic Height.")
+  }
+  if (heightcm > 300) {
+    alert("Bro ,are you Giant? Enter Realistic Height.")
+  }
+
   if (bmi < 18.5) resultText += "Underweight";
   else if (bmi < 25) resultText += "Normal (Fit)";
   else if (bmi < 30) resultText += "Overweight";
@@ -54,10 +61,13 @@ function showHistory() {
   }
 
   let html = "<h3>Last 5 Entries:</h3><ul>";
-  for (let i = history.length - 1; i >= 0 && i > history.length - 6; i--) {
+  let sum=0;
+  let count=0;
+  for (let i = history.length - 1; i >= 0 && i > history.length - 6; i--,count++) {
     const h = history[i];
     let category = "";
     const bmi = parseFloat(h.bmi);
+    sum+=bmi;
 
     if (bmi < 18.5) category = "Underweight";
     else if (bmi < 25) category = "Normal (Fit)";
@@ -68,6 +78,8 @@ function showHistory() {
 
   }
   html += "</ul>";
+  const avg=(sum /count).toFixed(2);
+  html+=`<p><strong>Average BMI (last ${count}): ${avg}</strong></P>`;
 
   historyBox.innerHTML = html;
 }
@@ -78,3 +90,8 @@ function clearHistory() {
 }
 
 window.addEventListener("load", showHistory);
+function resetform() {
+  document.querySelector("form").reset();
+  const resultBox = document.getElementById("result");
+  if (resultBox) resultBox.textContent = "";
+}
