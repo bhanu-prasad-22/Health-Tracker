@@ -14,6 +14,14 @@ document.querySelector("form").addEventListener("submit", function (e) {
   const heightM = heightcm / 100;
   const bmi = Weight / (heightM * heightM);
   let resultText = `Your BMI is ${bmi.toFixed(2)} – `;
+  let advice = "";
+if (bmi < 18.5) advice = "Increase protein intake. Focus on strength training and calorie surplus.";
+else if (bmi < 25) advice = "Maintain this range. Keep doing balanced workouts and proper sleep.";
+else if (bmi < 30) advice = "Cut sugar, reduce portion size. Add daily cardio/walks.";
+else advice = "Start moderate exercise and consult a doctor for guided weight control.";
+
+resultText += `\nAdvice: ${advice}`;
+
 
   if (heightcm < 50) {
     alert("Bro , are you an ant?Enter Realistic Height.")
@@ -29,6 +37,7 @@ document.querySelector("form").addEventListener("submit", function (e) {
 
   let resultBox = document.getElementById("result");
   resultBox.textContent = resultText;
+  resultBox.innerText = resultText;
   resultBox.style.fontWeight = "bold";
   resultBox.style.color = "#222";
 
@@ -84,10 +93,16 @@ function showHistory() {
   historyBox.innerHTML = html;
 }
 
+
 function clearHistory() {
-  localStorage.removeItem("bmiHistory");
-  showHistory();
+  if (confirm("Are you sure you want to clear all BMI history?")) {
+    localStorage.removeItem("bmiHistory");
+    showHistory();
+    const resultBox = document.getElementById("result");
+    if (resultBox) resultBox.textContent = "";
+  }
 }
+
 
 window.addEventListener("load", showHistory);
 function resetform() {
