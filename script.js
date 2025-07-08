@@ -110,3 +110,23 @@ function resetform() {
   const resultBox = document.getElementById("result");
   if (resultBox) resultBox.textContent = "";
 }
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+}
+function exportCSV() {
+  const history = JSON.parse(localStorage.getItem("bmiHistory")) || [];
+  if (history.length === 0) return alert("No history to export.");
+
+  let csv = "Name,Age,Weight,Height,BMI,Time\n";
+  history.forEach(h => {
+    csv += `${h.name},${h.age},${h.weight},${h.height},${h.bmi},${h.time}\n`;
+  });
+
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "bmi_history.csv";
+  a.click();
+}

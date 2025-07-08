@@ -43,3 +43,12 @@ button:hover {
     border: 1px solid #1e90ff;
     border-radius: 6px;
 }
+.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+.dark-mode input, .dark-mode button {
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+}
